@@ -15,10 +15,10 @@ const UniversalLayout = ({children}) => {
         style={{
           display: 'flex',
           alignItems: 'center',
-          backgroundColor: "white",
-          boxShadow: "0px 2px 5px 1px grey",
-          margin:"0.1rem",
-          marginBottom:"10px",
+          backgroundColor: "transparent",
+          // boxShadow: "0px 2px 5px 1px grey",
+          // margin:"0.1rem",
+          // marginBottom:"10px",
           zIndex:1
         }}
       >
@@ -29,7 +29,8 @@ const UniversalLayout = ({children}) => {
         style={{
           padding: '3rem',
           minHeight: "100vh",
-          backgroundColor:"#f0f5fc"
+          // backgroundColor:"#f0f5fc"
+          backgroundColor:"white"
         }}
       >
         {children}

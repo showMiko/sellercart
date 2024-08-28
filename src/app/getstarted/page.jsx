@@ -366,7 +366,8 @@ const GetStarted = () => {
         <>
         <div
             className={`flip-card ${isLogin ? "flipped" : ""
-            }`}
+            }` }
+            
             >
             <div className="flip-card-inner">
                 <div className="flip-card-front">

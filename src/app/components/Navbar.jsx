@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import { Breadcrumb, Button, Drawer } from 'antd';
 import { ShoppingCartOutlined, UserOutlined, MoreOutlined } from '@ant-design/icons';
@@ -97,7 +98,7 @@ const Navbar = () => {
                             {userData?
                             <>
                             <ShoppingCartOutlined style={{ fontSize: '24px', marginRight: '20px' }} />
-                            <Avatar icon={<UserOutlined />} />
+                            <Avatar icon={<UserOutlined />} style={{cursor:"pointer"}}/>
                             <span style={{ marginLeft: '10px' }}>{userData.firstName}</span>
                             <Button onClick={handleLogout} className='ml-5'>Logout</Button>
                             </>
