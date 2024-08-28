@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Breadcrumb, Button, Drawer } from 'antd';
 import { ShoppingCartOutlined, UserOutlined, MoreOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/util/firebase';
+import { useContextApi } from '@/context/context';
+import { useRouter } from 'next/navigation';
 
 const menuItems = [
     {
@@ -32,19 +36,31 @@ const menuItems = [
 
 const Navbar = () => {
     const [visible, setVisible] = useState(false);
+    const router=useRouter();
     const [screenWidth, setScreenWidth] = useState(0);
-
+    const {userData}=useContextApi();
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            localStorage.clear('email');
+            localStorage.clear('uid');
+        } catch (error) {
+            console.error('Error signing out:', error);
+        }
+    };
     useEffect(() => {
         const updateScreenWidth = () => {
             setScreenWidth(window.innerWidth);
         };
+
+        console.log(userData," from Navbar")
 
         updateScreenWidth();
         window.addEventListener('resize', updateScreenWidth);
         return () => {
             window.removeEventListener('resize', updateScreenWidth);
         };
-    }, []);
+    }, [userData]);
 
     const showDrawer = () => {
         setVisible(true);
@@ -56,7 +72,7 @@ const Navbar = () => {
     return (
         <>
             {
-                screenWidth >= 620 ?
+                screenWidth >= 780 ?
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', width: "100%" }}>
                         <Breadcrumb
                             items={[
@@ -78,11 +94,19 @@ const Navbar = () => {
                             ]}
                         />
                         <div style={{ display: 'flex', alignItems: 'center' }}>
+                            {userData?
+                            <>
                             <ShoppingCartOutlined style={{ fontSize: '24px', marginRight: '20px' }} />
                             <Avatar icon={<UserOutlined />} />
-                            <span style={{ marginLeft: '10px' }}>Dummy Name</span>
+                            <span style={{ marginLeft: '10px' }}>{userData.firstName}</span>
+                            <Button onClick={handleLogout} className='ml-5'>Logout</Button>
+                            </>
+                            :
+                            <Button onClick={()=>router.push('/getstarted')} className='ml-5'>LogoIn/SignUp</Button>
+                            }
                         </div>
-                    </div> :
+                    </div> 
+                    :
                     <>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', width: "100%",padding:"0px" }}>
                             <Breadcrumb
@@ -109,15 +133,16 @@ const Navbar = () => {
                             <div style={{ padding: '10px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
                                     <Avatar icon={<UserOutlined />} />
-                                    <span style={{ marginLeft: '10px' }}>Dummy Name</span>
+                                    <span style={{ marginLeft: '10px' }}>{userData.firstName}</span>
                                 </div>
                                 {menuItems.map(item => (
                                     <div key={item.key} style={{ marginBottom: '10px' }}>
                                         {item.label}
                                     </div>
                                 ))}
-                                <div style={{ marginBottom: '10px' }}><a target="_blank" rel="noopener noreferrer" href="">Component
-            </a></div>
+                                <div style={{ marginBottom: '10px' }}><a target="_blank" rel="noopener noreferrer" href="">Component</a>
+                                <br></br><Button className='mt-10' onClick={handleLogout}>Logout</Button>
+                                </div>
                                 
                             </div>
                         </Drawer>
