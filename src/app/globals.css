@@ -29,9 +29,30 @@
   backface-visibility: hidden;
 }
 
-.flip-card-front {
-}
-
 .flip-card-back {
   transform: rotateY(180deg);
+}
+
+
+.relative {
+  position: relative;
+  overflow: hidden; /* Ensure the image does not overflow */
+}
+
+img {
+  display: block; /* Remove any extra space below the image */
+  width: 100%; /* Ensure the image takes the full width of the container */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.group:hover img {
+  filter: blur(4px); /* Blur effect on hover */
+}
+
+.group:hover .bg-black {
+  opacity: 0.5; /* Black overlay on hover */
+}
+
+.group:hover .text-white {
+  opacity: 1; /* Show text on hover */
 }

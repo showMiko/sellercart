@@ -40,7 +40,7 @@ export function ContextProvider({children})
             console.log(userData);
         }
     }, [userEmail,uid]);
-    const values={userEmail,setUserEmail,uid,setUid,userData};
+    const values={userEmail,setUserEmail,uid,setUid,userData,setUserData};
     return(
         <DataContext.Provider value={values}>
             {children}

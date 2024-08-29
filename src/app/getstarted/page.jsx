@@ -60,7 +60,7 @@ const GetStarted = () => {
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm lg:w-1/2">
                     <img
                         alt="Seller Cart"
-                        src="/logotransparent.png"
+                        src="/logoTransparent.png"
                         className="mx-auto h-10 w-auto"
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -119,7 +119,7 @@ const GetStarted = () => {
                             </button>
                         </div>
                     </form>
-                    <p className="mt-10 text-center text-sm text-gray-500 w-full flex flex-col items-center">
+                    <div className="mt-10 text-center text-sm text-gray-500 w-full flex flex-col items-center">
                         Already a member?
                         <button
                                 onClick={handleFlip}
@@ -130,7 +130,7 @@ const GetStarted = () => {
                             <div className='mt-5'>
                         <a href='/'>Go to HomePage</a>
                         </div>
-                    </p>
+                    </div>
                     
                 </div>
 
@@ -326,7 +326,7 @@ const GetStarted = () => {
                                 {isLoading?"Creating Account..." :"Create Account"}
                             </button>
                         </div>
-                        <p className="mt-10 text-center text-sm text-gray-500 w-full flex flex-col items-center">
+                        <div className="mt-10 text-center text-sm text-gray-500 w-full flex flex-col items-center">
                         Already a member?
                         <button
                                 onClick={handleFlip}
@@ -337,7 +337,7 @@ const GetStarted = () => {
                         <div className='mt-5'>
                         <a href='/'>Go to HomePage</a>
                         </div>
-                    </p>
+                    </div>
                     </form>
                 </div>
 

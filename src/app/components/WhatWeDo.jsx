@@ -14,7 +14,7 @@ const WhatWeDo = () => {
           <h1 className="text-3xl md:text-5xl p-2  tracking-loose">
               What We Do
             </h1>
-          <p className="text-sm md:text-xl text-gray-50 mb-4 text-black" style={{fontStyle:'italic'}}>
+          <p className="text-sm md:text-xl text-gray-50 mb-4" style={{fontStyle:'italic',color:"black"}}>
           We are the One Stop Solution for Your Products. You may choose to sell whatever you need to or can choose to buy what others have Listed. On our platform you can be both buyer and seller. Keep Track of all your orders, customers and your listed products.All in a Seamless UI.
             </p>
             

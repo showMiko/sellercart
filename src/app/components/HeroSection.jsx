@@ -15,7 +15,7 @@ const HeroSection = () => {
             <h2 className="text-3xl md:text-5xl leading-relaxed md:leading-snug mb-2">
               Products Maketh Business
             </h2>
-            <p className="text-sm md:text-base text-gray-50 mb-4 text-black">
+            <p className="text-sm md:text-base text-gray-50 mb-4 text-black" style={{color:"black"}}>
               Sell you products and buy what others has to offer all in one
               place
             </p>
