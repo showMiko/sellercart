@@ -12,32 +12,6 @@ import { auth } from "@/util/firebase";
 import { useContextApi } from "@/context/context";
 import { useRouter } from "next/navigation";
 
-const menuItems = [
-  {
-    key: "1",
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="">
-        General
-      </a>
-    ),
-  },
-  {
-    key: "2",
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="">
-        Layout
-      </a>
-    ),
-  },
-  {
-    key: "3",
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="">
-        Navigation
-      </a>
-    ),
-  },
-];
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
@@ -90,19 +64,13 @@ const Navbar = () => {
           <Breadcrumb
             items={[
               {
-                title: "Seller Cart",
+                title: <a href="/">Seller Cart</a>,
               },
               {
-                title: <a href="">Component</a>,
+                title: <a href="/products">Products</a>,
               },
               {
-                title: <a href="">Menus</a>,
-                menu: {
-                  items: menuItems,
-                },
-              },
-              {
-                title: "Button",
+                title: <a href="/sell">Sell Your Product</a>
               },
             ]}
           />
@@ -112,7 +80,13 @@ const Navbar = () => {
                 <ShoppingCartOutlined
                   style={{ fontSize: "24px", marginRight: "20px" }}
                 />
-                <Avatar icon={<UserOutlined />} style={{ cursor: "pointer" }} />
+                {
+                userData.profileImage?
+                <Avatar src={userData.profileImage} style={{ cursor: "pointer" }} onClick={()=>router.push("/userProfile")}/>
+                :
+                <Avatar icon={<UserOutlined />} style={{ cursor: "pointer" }} onClick={()=>router.push("/userProfile")}/>
+                }
+                
                 <span style={{ marginLeft: "10px" }}>{userData.firstName}</span>
                 <Button onClick={handleLogout} className="ml-5">
                   Logout
@@ -144,7 +118,7 @@ const Navbar = () => {
               style={{ fontSize: "1rem" }}
               items={[
                 {
-                  title: "Seller Cart",
+                    title: <a href="/">Seller Cart</a>,
                 },
               ]}
             />
@@ -173,24 +147,37 @@ const Navbar = () => {
                   marginBottom: "20px",
                 }}
               >
-                {userData && <Avatar icon={<UserOutlined />}/>}
+                {userData? 
+                <>
+                {
+                userData.profileImage?
+                <Avatar src={userData.profileImage} style={{ cursor: "pointer" }} onClick={()=>router.push("/userProfile")}/>
+                :
+                <Avatar icon={<UserOutlined />} style={{ cursor: "pointer" }} onClick={()=>router.push("/userProfile")}/>
+                }
+                    
+                </>
+                    :
+                    <></>
+                }
                 {userData && <span style={{ marginLeft: "10px" }}>{userData.firstName}</span>}
               </div>
-              {menuItems.map((item) => (
-                <div key={item.key} style={{ marginBottom: "10px" }}>
-                  {item.label}
-                </div>
-              ))}
-              <div style={{ marginBottom: "10px" }}>
-                <a target="_blank" rel="noopener noreferrer" href="">
-                  Component
+              <div style={{ marginBottom: "10px"  }} className="flex flex-col"> 
+              <a  rel="noopener noreferrer" href="/" className="mt-10">
+                  Home
+              </a>
+                <a  rel="noopener noreferrer" href="/products" className="mt-10">
+                  Products
+                </a>
+                <a  rel="noopener noreferrer" href="/sell" className="mt-10">
+                  Sell Your Product
                 </a>
                 <br />
                 <>
                 {userData ? (
                     <>
                   <br/>
-                    <Button onClick={handleLogout} className="mt-10">
+                    <Button onClick={handleLogout} className="mt-10 w-1/2">
                       Logout
                     </Button>
                   </>
@@ -198,7 +185,7 @@ const Navbar = () => {
                 : 
                 (
                     <Button
-                    className="mt-10"
+                    className="mt-10 w-1/2"
                     onClick={() => router.push("/getstarted")}
                     >
                     LogoIn/SignUp
