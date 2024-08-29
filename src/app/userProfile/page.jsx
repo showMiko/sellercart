@@ -10,6 +10,7 @@ const ProfileCard = () => {
     const [form] = Form.useForm();
     const [avatar, setAvatar] = useState();
     const { userData,uid } = useContextApi();
+    const {profileImage}=userData;
     // const uid = localStorage.getItem('uid');
 
     const toggleEditForm = () => {
@@ -18,6 +19,10 @@ const ProfileCard = () => {
             form.resetFields();
         }
     };
+
+    useState(()=>{
+        console.log(userData.profileImage,"is the Image");
+    },userData);
 
     const handleUpload = (file) => {
         const reader = new FileReader();
@@ -34,12 +39,14 @@ const ProfileCard = () => {
                 uid,
                 values,
                 avatar,
+                profileImage
             });
 
             console.log({values,uid,avatar})
 
             alert(response.data.message);
-        // console.log(avatar);
+        console.log(avatar,"is the avatar");
+        
         toggleEditForm();
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -68,7 +75,7 @@ const ProfileCard = () => {
                             cursor: isEditing ? 'pointer' : 'default',
                         }}
                     >
-                        <Avatar size={150} src={userData.profileImage?userData.profileImage:avatar} />
+                        <Avatar size={150} src={avatar || profileImage} >User</Avatar>
                         {isEditing && (
                             <div
                                 style={{

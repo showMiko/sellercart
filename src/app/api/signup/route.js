@@ -32,6 +32,7 @@ export async function POST(request) {
             cart,
             addresses,
             orders,
+            pprofileImage:null,
             isVerified: false })
         // await addDoc(collection(firestore, "users"), {
         //     firstName,

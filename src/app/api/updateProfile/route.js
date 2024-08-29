@@ -3,18 +3,21 @@ import {  ref, uploadString, getDownloadURL } from "firebase/storage";
 import {  doc, updateDoc } from "firebase/firestore"; 
 import { firestore, storage } from "@/util/firebase";
 import { NextResponse } from "next/server";
+import { useContextApi } from "@/context/context";
 
 
 export async function PUT(req)
 {
     const data=await req.json();
-    const { uid, values, avatar } = data;
-
+    const { uid, values, avatar,profileImage } = data;
+    // const {userData}=useContextApi();
         try {
             console.log("Init")
-            let profileImageUrl=null;
+            let profileImageUrl=profileImage;
             if(avatar)
             {
+                console.log(avatar, "from Route Js")
+                console.log(profileImageUrl);
                 const imageRef = ref(storage, `profileImages/${uid}`);
                 console.log("imageRef made")
                 await uploadString(imageRef, avatar, 'data_url');

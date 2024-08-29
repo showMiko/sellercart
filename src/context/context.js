@@ -7,15 +7,6 @@ export const DataContext=createContext();
 export function ContextProvider({children})
 {
     const [userEmail,setUserEmail]=useState(null);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [mobileNo, setMobileNo] = useState('');
-    const [addresses,setAddress]=useState([]);
-    const [cart,setCart]=useState([]);
-    const [customers,setCustomers]=useState([]);
-    const [listedProducts,setListedProducts]=useState([]);
-    const [orders,setOrders]=useState([]);
-    const [email, setEmail] = useState('');
     const [userData,setUserData]=useState('');
     const [uid,setUid]=useState('');
 
