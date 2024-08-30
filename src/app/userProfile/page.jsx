@@ -1,9 +1,10 @@
 "use client"
 import { useState } from 'react';
-import { Card, Button, Form, Input, Avatar, Upload } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Card, Button, Form, Input, Avatar, Upload, FloatButton } from 'antd';
+import { UploadOutlined,PlusCircleTwoTone } from '@ant-design/icons';
 import { useContextApi } from '@/context/context';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const ProfileCard = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -11,8 +12,7 @@ const ProfileCard = () => {
     const [avatar, setAvatar] = useState();
     const { userData,uid } = useContextApi();
     const {profileImage}=userData;
-    // const uid = localStorage.getItem('uid');
-
+    const router=useRouter();
     const toggleEditForm = () => {
         setIsEditing(!isEditing);
         if (isEditing) {
@@ -61,7 +61,7 @@ const ProfileCard = () => {
     }
 
     return (
-        <div className='flex flex-row justify-center'>
+        <div className='flex flex-col justify-center items-center'>
             <Card style={{ textAlign: "center", width: '100%', maxWidth: '400px', padding: '20px' }}>
                 <Upload
                     showUploadList={false}
@@ -123,6 +123,13 @@ const ProfileCard = () => {
                     )}
                 </Form>
             </Card>
+            <div>
+            <FloatButton style={{width:"150px"}} shape='square' onClick={() => router.push("/sell")} description={<div className='flex justify-center'>
+                <PlusCircleTwoTone style={{fontSize:"15px",marginRight:"10px"}}/>Add Your Product
+            </div>
+        }
+            />
+            </div>
         </div>
     );
 };
