@@ -27,7 +27,7 @@ const UniversalLayout = ({children}) => {
       :<></>}
       <Content
         style={{
-          padding: '3rem',
+          // padding: '3rem',
           minHeight: "100vh",
           // backgroundColor:"#f0f5fc"
           backgroundColor:"white"

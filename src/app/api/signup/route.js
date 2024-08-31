@@ -34,18 +34,6 @@ export async function POST(request) {
             orders,
             pprofileImage:null,
             isVerified: false })
-        // await addDoc(collection(firestore, "users"), {
-        //     firstName,
-        //     lastName,
-        //     mobileNo,
-        //     email,
-        //     listedProducts,
-        //     customers,
-        //     cart,
-        //     addresses,
-        //     orders,
-        //     isVerified: false 
-        // });
         return NextResponse.json({ message: "User Created Successfully. Please verify your email.", userCreds }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });

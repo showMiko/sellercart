@@ -8,7 +8,7 @@ import WhatWeDo from "./components/WhatWeDo";
 
 export default function Home() {
   return (
-    <div className="flex justify-center flex-col" style={{margin:"-3rem"}}> 
+    <div className="flex justify-center flex-col" > 
     <HeroSection/>
     <WhatWeDo/>
     <ImageGallery/>

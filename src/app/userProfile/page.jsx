@@ -1,7 +1,11 @@
 "use client"
 import { useState } from 'react';
-import { Card, Button, Form, Input, Avatar, Upload, FloatButton } from 'antd';
-import { UploadOutlined,PlusCircleTwoTone } from '@ant-design/icons';
+import { Card, Button, Form, Input, Avatar, Upload, FloatButton,message } from 'antd';
+import { UploadOutlined,PlusCircleTwoTone,UserOutlined,ProductFilled,ReconciliationOutlined,DropboxOutlined  } from '@ant-design/icons';
+import { CiLocationArrow1 } from "react-icons/ci";
+import { MdChecklistRtl } from "react-icons/md";
+
+
 import { useContextApi } from '@/context/context';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -44,9 +48,9 @@ const ProfileCard = () => {
 
             console.log({values,uid,avatar})
 
-            alert(response.data.message);
+            message.success(response.data.message);
+
         console.log(avatar,"is the avatar");
-        
         toggleEditForm();
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -56,12 +60,14 @@ const ProfileCard = () => {
 
     if (!userData) {
         return (
-            <div className='flex justify-center text-2xl items-center'>The User is not Logged In/Sign Up</div>
+            <div className='flex justify-center text-2xl items-center'>
+                Loading Your Profile...
+            </div>
         );
     }
 
     return (
-        <div className='flex flex-col justify-center items-center'>
+        <div className='flex flex-col justify-center items-center mt-10'>
             <Card style={{ textAlign: "center", width: '100%', maxWidth: '400px', padding: '20px' }}>
                 <Upload
                     showUploadList={false}
@@ -108,7 +114,7 @@ const ProfileCard = () => {
                         <Input disabled={!isEditing} />
                     </Form.Item>
                     <Form.Item label="Email" name="email" initialValue={userData.email} rules={[{ required: true, type: 'email' }]}>
-                        <Input disabled={!isEditing} />
+                        <Input disabled />
                     </Form.Item>
                     <Form.Item label="Mobile No" name="mobileNo" initialValue={userData.mobileNo} rules={[{ required: true }]}>
                         <Input disabled={!isEditing} />
@@ -122,8 +128,16 @@ const ProfileCard = () => {
                         </Button>
                     )}
                 </Form>
+                <div className="flex justify-center flex-wrap">
+                <Button className='m-2' icon={<CiLocationArrow1/>} onClick={()=>router.push('/address')}>Address</Button>
+                <Button className='m-2' icon={<DropboxOutlined />} onClick={()=>router.push('/orders')}>Orders</Button>
+                <Button className='m-2' icon={<UserOutlined/>} onClick={()=>router.push('/customers')}>Customers</Button>
+                <Button className='m-2' icon={<MdChecklistRtl />} onClick={()=>router.push('/listedProducts')}>Listed Products</Button>
+            </div>  
+                
             </Card>
-            <div>
+            
+            <div> 
             <FloatButton style={{width:"150px"}} shape='square' onClick={() => router.push("/sell")} description={<div className='flex justify-center'>
                 <PlusCircleTwoTone style={{fontSize:"15px",marginRight:"10px"}}/>Add Your Product
             </div>
