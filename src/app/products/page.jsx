@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Input, Select, Skeleton, Empty, Button } from 'antd';
 import {ShoppingCartOutlined} from "@ant-design/icons";
+import { useRouter } from 'next/navigation';
+import { useContextApi } from '@/context/context';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -13,7 +15,8 @@ const Products = () => {
     const [sortOrder, setSortOrder] = useState('asc');
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
-
+    const router=useRouter();
+    const {setCurrProduct}=useContextApi();
     useEffect(() => {
         fetchProducts();
     }, [page, sortOrder]);
@@ -96,7 +99,7 @@ const Products = () => {
                     ))
                 ) : sortedProducts.length > 0 ? (
                     sortedProducts.map(product => (
-                        <div className='p-0 md:p-5'>
+                        <div className='p-0 md:p-5' key={product.id}>
 
                         <Col key={product.id}>
             <Card
@@ -104,6 +107,11 @@ const Products = () => {
                 style={{margin:"2px"}}
                 className="w-48 h-96 mx-auto md:w-60 md:h-auto lg:w-60 lg:h-auto" // Fixed width for mobile
                 cover={<img alt={product.productName} style={{borderRadius:"15px"}} src={product.productImages[0]} className="w-full h-36 object-cover md:h-60 p-2" />}
+                onClick={()=>{
+                    // const productString = encodeURIComponent(JSON.stringify(product));
+                    setCurrProduct(product);
+                    router.push(`/products/${product.id}`);
+                }}
                 >
                 <h3 className="text-lg">{product.productName}</h3>
                 <p className="text-sm text-gray-500">{product.category}</p>
