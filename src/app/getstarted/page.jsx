@@ -203,9 +203,14 @@ const GetStarted = () => {
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 lg:flex-row items-center" style={{ boxShadow: "1px 1px 10px 1px grey", backgroundColor: "white",minHeight:"90vh" }}>
                 {/* Form on the left */}
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm lg:w-1/2">
-                    <img
+                {/* <img
                         alt="Seller Cart"
-                        src="/logotransparent.png"
+                        src="/logoTransparent.png"
+                        className="mx-auto h-10 w-auto"
+                    /> */}
+                     <img
+                        alt="Seller Cart"
+                        src="/logoTransparent.png"
                         className="mx-auto h-10 w-auto"
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">

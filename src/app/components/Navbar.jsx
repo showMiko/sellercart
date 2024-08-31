@@ -97,7 +97,7 @@ const Navbar = () => {
                 onClick={() => router.push("/getstarted")}
                 className="ml-5"
               >
-                LogoIn/SignUp
+                LogIn/SignUp
               </Button>
             )}
           </div>

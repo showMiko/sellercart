@@ -15,7 +15,13 @@ const ProfileCard = () => {
     const [form] = Form.useForm();
     const [avatar, setAvatar] = useState();
     const { userData,uid } = useContextApi();
-    const {profileImage}=userData;
+    // const {profileImage}=userData;
+    let profileImage="";
+
+    if(userData)
+    {
+        profileImage=userData.profileImage
+    }
     const router=useRouter();
     const toggleEditForm = () => {
         setIsEditing(!isEditing);
