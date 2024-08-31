@@ -107,7 +107,7 @@ const Products = () => {
           ))
         ) : sortedProducts.length > 0 ? (
           sortedProducts.map((product) => (
-            <div className="p-0 md:p-5" >
+            <div className="p-0 md:p-5" key={product.id}>
               <Col key={product.id}>
                 <Card
                   hoverable
