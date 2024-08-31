@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
-  const router = useRouter();
   return (
     <section>
       <div className="bg-white text-black py-20 ">
