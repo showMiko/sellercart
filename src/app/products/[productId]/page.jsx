@@ -14,17 +14,19 @@ const ProductsPage = ({ params }) => {
   const [cartLoading, setCartLoading] = useState(false); // Loading for add to cart
   const router = useRouter();
   const productId = params.productId;
-  const { uid } = useContextApi();
+  const { uid,currProduct,setCurrProduct } = useContextApi();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`/api/fetchProduct/${productId}`);
         setProduct(response.data.data);
+        setCurrProduct(response.data.data);
       } catch (error) {
         console.error("Error fetching product:", error);
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
+        // console.log(product," is the Current Product") // Set loading to false after fetching
       }
     };
 
