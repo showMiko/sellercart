@@ -6,30 +6,41 @@ import React, { useEffect, useState } from 'react';
 import { Card, Skeleton, Button } from 'antd';
 
 const Cart = () => {
-  const { uid } = useContextApi();
+  const { uid,userData } = useContextApi();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    const fetchCartProducts = async () => {
-      setLoading(true); // Set loading to true when fetching starts
-      try {
-        const response = await axios.get(`/api/getcart/${uid}`);
-        setCartItems(response.data.cart);
-        const total = response.data.cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
-        setTotalPrice(total);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      } finally {
-        setLoading(false); // Set loading to false when fetching ends
-      }
-    };
+    // const fetchCartProducts = async () => {
+    //   setLoading(true); // Set loading to true when fetching starts
+    //   try {
+    //     const response = await axios.get(`/api/getcart/${uid}`);
+    //     setCartItems(response.data.cart);
+    //     const total = response.data.cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    //     setTotalPrice(total);
+    //   } catch (error) {
+    //     console.error("Error fetching cart data:", error);
+    //   } finally {
+    //     setLoading(false); // Set loading to false when fetching ends
+    //   }
+    // };
 
-    if (uid) {
-      fetchCartProducts();
+    // if (uid) {
+    //   fetchCartProducts();
+    // }
+    try {
+        setCartItems(userData.cart);
+        const total=userData.cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+        setTotalPrice(total);
+        console.log(userData);
+    } catch (error) {
+        console.error(error)
     }
-  }, [uid]);
+    finally{
+        setLoading(false);
+    }
+  }, [userData,cartItems,totalPrice]);
 
   if (loading) {
     return (
@@ -40,6 +51,7 @@ const Cart = () => {
   }
 
   return (
+    cartItems &&
     <div className="cart-container" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: '30px' }}>
       <div style={{ flex: '2', display: 'flex', flexDirection: 'column', maxWidth: '66%' }}>
         {cartItems.map((item, index) => (
