@@ -370,6 +370,7 @@ const GetStarted = () => {
     return (
         <>
         <div
+        style={{padding:"2rem"}}
             className={`flip-card ${isLogin ? "flipped" : ""
             }` }
             

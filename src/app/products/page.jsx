@@ -136,7 +136,11 @@ const Products = () => {
                   </p>
                   <div className="border-t border-gray-300 my-2" />
                   <div className="flex justify-between items-center">
-                    <Button icon={<ShoppingCartOutlined />} />
+                    <Button onClick={() => {
+                    // const productString = encodeURIComponent(JSON.stringify(product));
+                    setCurrProduct(product);
+                    router.push(`/products/${product.id}`);
+                  }}>Details</Button>
                     <p className="font-bold">{product.price}/-</p>
                   </div>
                 </Card>

@@ -93,3 +93,7 @@ img {
 .products-page .ant-card {
   margin-bottom: 20px;
 } */
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}

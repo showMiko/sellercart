@@ -78,6 +78,7 @@ const Navbar = () => {
             {userData ? (
               <>
                 <ShoppingCartOutlined
+                onClick={()=>router.push("/cart")}
                   style={{ fontSize: "24px", marginRight: "20px" }}
                 />
                 {
@@ -123,7 +124,7 @@ const Navbar = () => {
               ]}
             />
             <div style={{ display: "flex", alignItems: "center" }}>
-              {userData && <ShoppingCartOutlined style={{ fontSize: "24px" }} />}
+              {userData && <ShoppingCartOutlined style={{ fontSize: "24px" }} onClick={()=>router.push("/cart")}/>}
               <Button
                 type="text"
                 icon={<MoreOutlined />}
