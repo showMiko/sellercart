@@ -19,7 +19,7 @@ const HeroSection = () => {
             </p>
             <a
               href="/products"
-              className="bg-transparent hover:bg-yellow-300 text-black hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent"
+              className="bg-transparent hover:bg-yellow-300 text-black hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent" style={{zIndex:1}}
             >
               Products
             </a>
