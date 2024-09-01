@@ -12,21 +12,21 @@ export async function PUT(req)
     const { uid, values, avatar,profileImage } = data;
     // const {userData}=useContextApi();
         try {
-            console.log("Init")
+            // console.log("Init")
             let profileImageUrl=profileImage;
             if(avatar)
             {
-                console.log(avatar, "from Route Js")
-                console.log(profileImageUrl);
+                // console.log(avatar, "from Route Js")
+                // console.log(profileImageUrl);
                 const imageRef = ref(storage, `profileImages/${uid}`);
-                console.log("imageRef made")
+                // console.log("imageRef made")
                 await uploadString(imageRef, avatar, 'data_url');
-                console.log("Image uploaded")
+                // console.log("Image uploaded")
                 profileImageUrl = await getDownloadURL(imageRef);
-                console.log("Getting Url")
+                // console.log("Getting Url")
             }
             const userRef = doc(firestore, 'users', uid);
-            console.log("Uploading Doc")
+            // console.log("Uploading Doc")
             await updateDoc(userRef, {
                 ...values,
                 profileImage: profileImageUrl, // Add the profileImage field

@@ -24,7 +24,7 @@ export async function POST(req) {
         )
         
         const productId=productRef.id;
-        console.log("Product Added to Product DB")
+        // console.log("Product Added to Product DB")
 
         // Step 2: Upload images to Firebase Storage
         const imageRefs = [];
@@ -45,7 +45,7 @@ export async function POST(req) {
             productImages: imageRefs,
         });
 
-        console.log("Product Image Ref added to Products DB")
+        // console.log("Product Image Ref added to Products DB")
 
         const userProductsAddition={
             imageRefs,
@@ -62,7 +62,7 @@ export async function POST(req) {
             listedProducts: arrayUnion(userProductsAddition) // Add product ID to user's listed products
         });
 
-        console.log("Product red added to users");
+        // console.log("Product red added to users");
 
         return NextResponse.json({ message: "Product added successfully", productId }, { status: 200 });
     } catch (error) {

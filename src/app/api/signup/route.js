@@ -32,7 +32,7 @@ export async function POST(request) {
             cart,
             addresses,
             orders,
-            pprofileImage:null,
+            profileImage:null,
             isVerified: false })
         return NextResponse.json({ message: "User Created Successfully. Please verify your email.", userCreds }, { status: 200 });
     } catch (error) {

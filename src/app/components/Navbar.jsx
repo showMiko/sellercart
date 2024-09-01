@@ -31,8 +31,8 @@ const Navbar = () => {
       setScreenWidth(window.innerWidth);
     };
 
-    console.log(userData, " from Navbar");
-    console.log("Called")
+    // console.log(userData, " from Navbar");
+    // console.log("Called")
     updateScreenWidth();
     window.addEventListener("resize", updateScreenWidth);
     return () => {

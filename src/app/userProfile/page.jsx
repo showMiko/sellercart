@@ -31,7 +31,7 @@ const ProfileCard = () => {
     };
 
     useState(()=>{
-        console.log(userData.profileImage,"is the Image");
+        // console.log(userData.profileImage,"is the Image");
     },userData);
 
     const handleUpload = (file) => {
@@ -52,11 +52,11 @@ const ProfileCard = () => {
                 profileImage
             });
 
-            console.log({values,uid,avatar})
+            // console.log({values,uid,avatar})
 
             message.success(response.data.message);
 
-        console.log(avatar,"is the avatar");
+        // console.log(avatar,"is the avatar");
         toggleEditForm();
         } catch (error) {
             console.error('Error updating profile:', error);

@@ -17,7 +17,7 @@ export function ContextProvider({children})
         try {
             const response = await axios.get(`/api/userData/${userId}`)
             .then((response)=>setUserData(response.data.data))
-            console.log("User Data Api Called from Context APi")
+            // console.log("User Data Api Called from Context APi")
             
         } catch (error) {
             console.error("Error fetching user data:", error);
@@ -27,9 +27,9 @@ export function ContextProvider({children})
         setUid(localStorage.getItem('uid'));
         if(userEmail!==null && uid!==null)
         {
-            console.log(uid);
+            // console.log(uid);
             fetchData(uid);
-            console.log(userData);
+            // console.log(userData);
         }
     }, [userEmail,uid]);
     const values={userEmail,setUserEmail,uid,setUid,userData,setUserData,currProduct,setCurrProduct};
