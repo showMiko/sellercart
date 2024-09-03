@@ -64,13 +64,13 @@ const Navbar = () => {
           <Breadcrumb
             items={[
               {
-                title: <a href="/">Seller Cart</a>,
+                title: <div className="cursor-pointer hover:bg-gray-200 rounded " onClick={()=>router.push("/")}>Seller Cart</div>,
               },
               {
-                title: <a href="/products">Products</a>,
+                title: <div className="cursor-pointer hover:bg-gray-200 rounded " onClick={()=>router.push("/products")}>Products</div>,
               },
               {
-                title: <a href="/sell">Sell Your Product</a>
+                title: <div className="cursor-pointer hover:bg-gray-200 rounded " onClick={()=>router.push("/sell")}>Sell Your Product</div>
               },
             ]}
           />
@@ -88,7 +88,7 @@ const Navbar = () => {
                 <Avatar icon={<UserOutlined />} style={{ cursor: "pointer" }} onClick={()=>router.push("/userProfile")}/>
                 }
                 
-                <span style={{ marginLeft: "10px" }}>{userData.firstName}</span>
+                <span className="cursor-pointer" onClick={()=>router.push("/userProfile")} style={{ marginLeft: "10px" }}>{userData.firstName}</span>
                 <Button onClick={handleLogout} className="ml-5">
                   Logout
                 </Button>
@@ -119,7 +119,7 @@ const Navbar = () => {
               style={{ fontSize: "1rem" }}
               items={[
                 {
-                    title: <a href="/">Seller Cart</a>,
+                    title: <div className="cursor-pointer hover:bg-gray-200 rounded " onClick={()=>router.push("/")}>Seller Cart</div>
                 },
               ]}
             />
@@ -161,18 +161,18 @@ const Navbar = () => {
                     :
                     <></>
                 }
-                {userData && <span style={{ marginLeft: "10px" }}>{userData.firstName}</span>}
+                {userData && <div onClick={()=>router.push("/userProfile")} style={{ marginLeft: "10px" }} className="cursor-pointer">{userData.firstName}</div>}
               </div>
               <div style={{ marginBottom: "10px"  }} className="flex flex-col"> 
-              <a  rel="noopener noreferrer" href="/" className="mt-10">
+              <div  rel="noopener noreferrer"  className="p-5  cursor-pointer hover:bg-gray-200 rounded-xl text-md mt-10" onClick={()=>router.push("/")}>
                   Home
-              </a>
-                <a  rel="noopener noreferrer" href="/products" className="mt-10">
+              </div>
+                <div  rel="noopener noreferrer"  className="p-5  cursor-pointer hover:bg-gray-200 rounded-xl text-md mt-10" onClick={()=>router.push("/products")}>
                   Products
-                </a>
-                <a  rel="noopener noreferrer" href="/sell" className="mt-10">
+                </div>
+                <div  rel="noopener noreferrer"  className="p-5  cursor-pointer hover:bg-gray-200 rounded-xl text-md mt-10" onClick={()=>router.push("/sell")}>
                   Sell Your Product
-                </a>
+                </div>
                 <br />
                 <>
                 {userData ? (
@@ -189,7 +189,7 @@ const Navbar = () => {
                     className="mt-10 w-1/2"
                     onClick={() => router.push("/getstarted")}
                     >
-                    LogoIn/SignUp
+                    LogIn/SignUp
                   </Button>
                 )}
                 </>

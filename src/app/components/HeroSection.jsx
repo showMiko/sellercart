@@ -17,12 +17,12 @@ const HeroSection = () => {
               Sell you products and buy what others has to offer all in one
               place
             </p>
-            <a
+            <div
               href="/products"
-              className="bg-transparent hover:bg-yellow-300 text-black hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent" style={{zIndex:1}}
+              className="cursor-pointer bg-transparent hover:bg-yellow-300 text-black hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent" style={{zIndex:1}}
             >
               Products
-            </a>
+            </div>
           </div>
           <div className="p-8 mt-12 mb-6 md:mb-0 md:mt-0 ml-0 md:ml-12 lg:w-2/3 justify-center">
             <div className="h-48 flex flex-wrap content-center">

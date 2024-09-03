@@ -13,27 +13,42 @@ const Cart = () => {
   const [deleting, setDeleting] = useState(false); // New state for deletion loading
 
   useEffect(() => {
+    if (uid) {
+      initCartItems();
+    }
+  }, [uid]);
+
+  const initCartItems = async () => {
+    setLoading(true);
     try {
-      setCartItems(userData.cart);
-      const total = userData.cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
-      setTotalPrice(total);
-      console.log(userData);
+      const response = await axios.get("/api/fetchCartItems", {
+        params: { uid }
+      });
+      const fetchedItems = response.data.cartData || [];
+      setCartItems(fetchedItems);
+      calculateTotal(fetchedItems); // Calculate total after fetching
     } catch (error) {
-      console.error(error);
+      message.error('Error fetching your Cart');
     } finally {
       setLoading(false);
-    //   window.location.reload();
     }
-  }, [userData,totalPrice]);
+  };
+
+  const calculateTotal = (items) => {
+    const total = items.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    setTotalPrice(total);
+  };
 
   const handleDelete = async (itemId) => {
     setDeleting(true); // Start loading
     try {
-      // Call your API to delete the item
       const response = await axios.put(`/api/deletecart/${uid}/${itemId}`);
-      // Update the cart items after deletion
-      setCartItems((prevItems) => prevItems.filter((_, index) => index !== itemId));
       if (response.status === 200) {
+        setCartItems((prevItems) => {
+          const updatedItems = prevItems.filter((_, index) => index !== itemId);
+          calculateTotal(updatedItems); // Recalculate total after deletion
+          return updatedItems;
+        });
         message.success("Product Removed from the Cart");
       }
     } catch (error) {
@@ -41,9 +56,52 @@ const Cart = () => {
       message.error("Failed to Remove from the Cart");
     } finally {
       setDeleting(false); // End loading
-      window.location.reload();
     }
   };
+
+  // useEffect(() => {
+  //     if(uid)
+  //     {
+  //       initCartItems();
+  //     }
+  // }, [uid]);
+
+  // const initCartItems=async()=>{
+  //   setLoading(true)
+  //   try {
+  //     const response = await axios.get("/api/fetchCartItems", {
+  //       params: { uid }
+  //     }).then((response)=>setCartItems(response.data.cartData || [])).then(()=>{
+  //       const total=cartItems.reduce((sum, item) => sum + parseFloat(item.price), 0);
+  //       setTotalPrice(total);
+  //     })
+  //   } catch (error) {
+  //     message.error('Error fetching your Cart');
+  //   }
+  //   finally{
+  //     setLoading(false);
+  //   }
+  // }
+
+  // const handleDelete = async (itemId) => {
+  //   setDeleting(true); // Start loading
+  //   try {
+  //     // Call your API to delete the item
+  //     const response = await axios.put(`/api/deletecart/${uid}/${itemId}`);
+  //     // Update the cart items after deletion
+  //     setCartItems((prevItems) => prevItems.filter((_, index) => index !== itemId));
+  //     if (response.status === 200) {
+  //       message.success("Product Removed from the Cart");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting item:", error);
+  //     message.error("Failed to Remove from the Cart");
+  //   } finally {
+  //     setDeleting(false); // End loading
+  //     // window.location.reload();
+  //     initCartItems();
+  //   }
+  // };
 
   if (loading) {
     return (
@@ -138,7 +196,7 @@ const Cart = () => {
           }
         `}</style>
       </div>
-}
+    }
     </Spin>
   );
 }
