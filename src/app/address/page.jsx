@@ -99,8 +99,9 @@ const Address = () => {
           <List
             bordered
             dataSource={addresses}
-            renderItem={item => (
+            renderItem={(item,index) => (
               <List.Item
+                key={index}
                 className="address-item"
                 actions={[
                   <Button onClick={() => showModal(item)}>Edit</Button>,
