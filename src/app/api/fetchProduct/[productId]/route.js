@@ -15,7 +15,7 @@ export async function GET(request,{params})
         const docRef=doc(firestore,"products",productId);
         const productDoc=await getDoc(docRef);
         const data=productDoc.data();
-        console.log(data,'from the individual product api')
+        // console.log(data,'from the individual product api')
 
         return NextResponse.json({data},{status:200});
     }
