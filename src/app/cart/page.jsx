@@ -4,14 +4,15 @@ import { useContextApi } from '@/context/context';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Card, Skeleton, Button, Spin, message } from 'antd';
+import { useRouter } from 'next/navigation';
 
 const Cart = () => {
-  const { uid, userData } = useContextApi();
+  const { uid,setBuyNowItems } = useContextApi();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalPrice, setTotalPrice] = useState(0);
   const [deleting, setDeleting] = useState(false); // New state for deletion loading
-
+  const router=useRouter();
   useEffect(() => {
     if (uid) {
       initCartItems();
@@ -26,6 +27,7 @@ const Cart = () => {
       });
       const fetchedItems = response.data.cartData || [];
       setCartItems(fetchedItems);
+      setBuyNowItems(cartItems);
       calculateTotal(fetchedItems); // Calculate total after fetching
     } catch (error) {
       message.error('Error fetching your Cart');
@@ -49,6 +51,11 @@ const Cart = () => {
           calculateTotal(updatedItems); // Recalculate total after deletion
           return updatedItems;
         });
+        setBuyNowItems((prevItems) => {
+          const updatedItems = prevItems.filter((_, index) => index !== itemId);
+          calculateTotal(updatedItems); // Recalculate total after deletion
+          return updatedItems;
+        });
         message.success("Product Removed from the Cart");
       }
     } catch (error) {
@@ -59,49 +66,14 @@ const Cart = () => {
     }
   };
 
-  // useEffect(() => {
-  //     if(uid)
-  //     {
-  //       initCartItems();
-  //     }
-  // }, [uid]);
 
-  // const initCartItems=async()=>{
-  //   setLoading(true)
-  //   try {
-  //     const response = await axios.get("/api/fetchCartItems", {
-  //       params: { uid }
-  //     }).then((response)=>setCartItems(response.data.cartData || [])).then(()=>{
-  //       const total=cartItems.reduce((sum, item) => sum + parseFloat(item.price), 0);
-  //       setTotalPrice(total);
-  //     })
-  //   } catch (error) {
-  //     message.error('Error fetching your Cart');
-  //   }
-  //   finally{
-  //     setLoading(false);
-  //   }
-  // }
+  const handleBuyNow=()=>{
+    setLoading(true);
+    setBuyNowItems(cartItems);
+    setLoading(false);
+    router.push("/buynow");
 
-  // const handleDelete = async (itemId) => {
-  //   setDeleting(true); // Start loading
-  //   try {
-  //     // Call your API to delete the item
-  //     const response = await axios.put(`/api/deletecart/${uid}/${itemId}`);
-  //     // Update the cart items after deletion
-  //     setCartItems((prevItems) => prevItems.filter((_, index) => index !== itemId));
-  //     if (response.status === 200) {
-  //       message.success("Product Removed from the Cart");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error deleting item:", error);
-  //     message.error("Failed to Remove from the Cart");
-  //   } finally {
-  //     setDeleting(false); // End loading
-  //     // window.location.reload();
-  //     initCartItems();
-  //   }
-  // };
+  }
 
   if (loading) {
     return (
@@ -180,7 +152,7 @@ const Cart = () => {
             <span>Total:</span>
             <span>${totalPrice}</span>
           </div>
-          <button style={{ marginTop: '10px', width: '100%' }} className='hover:text-green-200 bg-black rounded h-10 text-white hover:bg-black-200'>Buy Now</button>
+          <button onClick={handleBuyNow} style={{ marginTop: '10px', width: '100%' }} className='hover:text-green-200 bg-black rounded h-10 text-white hover:bg-black-200'>Buy Now</button>
         </div>
 
         <style jsx>{`
