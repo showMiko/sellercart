@@ -362,9 +362,10 @@ const GetStarted = () => {
     const handleFlip = () => {
         setIsLogin(!isLogin);
     };
-    const getEmail=localStorage.getItem('email')
-    const getUid=localStorage.getItem('uid')
+   
     useEffect(() => {
+        const getEmail=localStorage.getItem('email')
+        const getUid=localStorage.getItem('uid')
         if (getEmail && getUid) {
             router.push('/');
         }
