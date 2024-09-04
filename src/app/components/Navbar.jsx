@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, Button, Drawer } from "antd";
+import { Breadcrumb, Button, Drawer, message } from "antd";
 import {
   ShoppingCartOutlined,
   UserOutlined,
@@ -21,7 +21,10 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth).then(()=>{localStorage.clear("email");
-        localStorage.clear("uid");}).then(()=>{setUserData(null); router.refresh()});
+        localStorage.clear("uid");}).then(()=>{message.success("Logging Out "); setUserData(null); });
+
+
+        router.push("/getstarted");
     } catch (error) {
       console.error("Error signing out:", error);
     }

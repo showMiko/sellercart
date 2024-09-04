@@ -72,7 +72,6 @@ const Cart = () => {
     setBuyNowItems(cartItems);
     setLoading(false);
     router.push("/buynow");
-
   }
 
   if (loading) {

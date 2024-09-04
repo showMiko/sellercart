@@ -11,6 +11,7 @@ export function ContextProvider({children})
     const [uid,setUid]=useState('');
     const [currProduct,setCurrProduct]=useState();
     const [buyNowItems,setBuyNowItems]=useState();
+    const [currentAddress,setCurrentAddress]=useState();
 
     useEffect(() => {
         const fetchData=async(userId)=>{
@@ -33,7 +34,7 @@ export function ContextProvider({children})
             // console.log(userData);
         }
     }, [userEmail,uid]);
-    const values={buyNowItems,setBuyNowItems,userEmail,setUserEmail,uid,setUid,userData,setUserData,currProduct,setCurrProduct};
+    const values={currentAddress,setCurrentAddress,buyNowItems,setBuyNowItems,userEmail,setUserEmail,uid,setUid,userData,setUserData,currProduct,setCurrProduct};
     return(
         <DataContext.Provider value={values}>
             {children}

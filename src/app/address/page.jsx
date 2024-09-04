@@ -1,16 +1,18 @@
-"use client"
+"use client";
 import React, { useContext, useState, useEffect } from 'react';
-import { Button, List, Spin, Modal, Form, Input, message } from 'antd';
+import { Button, List, Spin, Modal, Form, Input, message, Radio } from 'antd';
 import { useContextApi } from '@/context/context';
 import axios from 'axios';
+import {DeleteOutlined,EditOutlined,PlusCircleOutlined} from '@ant-design/icons';
 
 const Address = () => {
-  const { userData, uid } = useContextApi();
+  const { userData, uid, setCurrentAddress } = useContextApi(); // Ensure setCurrentAddress is available
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingAddress, setEditingAddress] = useState(null);
   const [addresses, setAddresses] = useState([]);
   const [form] = Form.useForm(); // Create a form instance
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   useEffect(() => {
     if (uid) {
@@ -24,7 +26,12 @@ const Address = () => {
       const response = await axios.get("/api/address", {
         params: { uid }
       });
-      setAddresses(response.data.addressData || []);
+      const fetchedAddresses = response.data.addressData || [];
+      setAddresses(fetchedAddresses);
+      if (fetchedAddresses.length > 0) {
+        setCurrentAddress(fetchedAddresses[0]); // Set the first address as the current address
+        setSelectedAddress(fetchedAddresses[0].id); // Select the first address by default
+      }
     } catch (error) {
       message.error('Error fetching addresses');
     } finally {
@@ -58,12 +65,10 @@ const Address = () => {
   const handleDeleteAddress = async (id) => {
     setLoading(true);
     try {
-      // await deleteAddressAPI(id);
-      const response =await axios.delete("/api/address",{
-        params: { uid,id }
+      const response = await axios.delete("/api/address", {
+        params: { uid, id }
       });
       message.success('Address deleted successfully');
-      // setAddresses(addresses.filter(address => address.id !== id));
       initAddress();
     } catch (error) {
       message.error('Error occurred while deleting address');
@@ -88,97 +93,104 @@ const Address = () => {
     form.resetFields(); // Reset the form fields when the modal is closed
   };
 
+  const handleAddressChange = (e) => {
+    const selectedId = e.target.value;
+    const selectedAddr = addresses.find(addr => addr.id === selectedId);
+    setSelectedAddress(selectedId);
+    setCurrentAddress(selectedAddr); // Update the current address in context
+  };
+
   return (
-    <Spin spinning={loading} size='large' style={{height:"100dvh" ,top:"50%"}}>
+    <Spin spinning={loading} size='large' style={{ height: "100dvh", top: "50%" }}>
+      <div className='p-3'>
+        {
+          !loading &&
+          <>
+            <Button style={{ marginBottom: "10px" }} type="primary" onClick={() => showModal()}><PlusCircleOutlined /> Address</Button>
+            <List
+              bordered
+              dataSource={addresses}
+              renderItem={(item) => (
+                <List.Item key={item.id} className="address-item">
+                  <Radio
+                    value={item.id}
+                    checked={selectedAddress === item.id}
+                    onChange={handleAddressChange}
+                  />
+                  <div className="address-text">
+                    {item.street}, {item.city}, {item.state}, {item.zip}, {item.phone}, {item.email}
+                  </div>
+                  <div>
+                    <Button onClick={() => showModal(item)}><EditOutlined /></Button>
+                    <Button onClick={() => handleDeleteAddress(item.id)}><DeleteOutlined /></Button>
+                  </div>
+                </List.Item>
+              )}
+            />
+            {addresses.length === 0 && <div>No address added.</div>}
+          </>
+        }
 
-    <div className='p-3'>
-      {
-      !loading &&
-        <>
-          <Button style={{ marginBottom: "10px" }} type="primary" onClick={() => showModal()}>Add New Address</Button>
-          <List
-            bordered
-            dataSource={addresses}
-            renderItem={(item,index) => (
-              <List.Item
-                key={index}
-                className="address-item"
-                actions={[
-                  <Button onClick={() => showModal(item)}>Edit</Button>,
-                  <Button onClick={() => handleDeleteAddress(item.id)}>Delete</Button>
-                ]}
-              >
-                <div className="address-text">
-                  {item.street}, {item.city}, {item.state}, {item.zip}, {item.phone}, {item.email}
-                </div>
-              </List.Item>
-            )}
-          />
-          {addresses.length === 0 && <div>No address added.</div>}
-        </>
-      }
-
-      <Modal
-        title={editingAddress ? 'Edit Address' : 'Add Address'}
-        visible={isModalVisible}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <Form
-          form={form} // Associate the form instance with the Form component
-          onFinish={handleAddEditAddress}
+        <Modal
+          title={editingAddress ? 'Edit Address' : 'Add Address'}
+          visible={isModalVisible}
+          footer={null}
+          onCancel={handleCancel}
         >
-          <Form.Item
-            name="street"
-            label="Street"
-            rules={[{ required: true, message: 'Please input the street!' }]}
+          <Form
+            form={form} // Associate the form instance with the Form component
+            onFinish={handleAddEditAddress}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="city"
-            label="City"
-            rules={[{ required: true, message: 'Please input the city!' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="state"
-            label="State"
-            rules={[{ required: true, message: 'Please input the state!' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="zip"
-            label="Zip Code"
-            rules={[{ required: true, message: 'Please input the zip code!' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="phone"
-            label="Phone Number"
-            rules={[{ required: true, message: 'Please input the phone number!' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="email"
-            label="Email"
-            rules={[{ required: true, message: 'Please input the email!' }, { type: 'email', message: 'Please enter a valid email!' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              {editingAddress ? 'Save' : 'Add'}
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-    </div>
-          
+            <Form.Item
+              name="street"
+              label="Street"
+              rules={[{ required: true, message: 'Please input the street!' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="city"
+              label="City"
+              rules={[{ required: true, message: 'Please input the city!' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="state"
+              label="State"
+              rules={[{ required: true, message: 'Please input the state!' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="zip"
+              label="Zip Code"
+              rules={[{ required: true, message: 'Please input the zip code!' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="phone"
+              label="Phone Number"
+              rules={[{ required: true, message: 'Please input the phone number!' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              label="Email"
+              rules={[{ required: true, message: 'Please input the email!' }, { type: 'email', message: 'Please enter a valid email!' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                {editingAddress ? 'Save' : 'Add'}
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
     </Spin>
   );
 };

@@ -1,7 +1,9 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const HeroSection = () => {
+  const router=useRouter();
   return (
     <section>
       <div className="bg-white text-black py-20 ">
@@ -18,7 +20,7 @@ const HeroSection = () => {
               place
             </p>
             <div
-              href="/products"
+              onClick={()=>router.push("/products")}
               className="cursor-pointer bg-transparent hover:bg-yellow-300 text-black hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent" style={{zIndex:1}}
             >
               Products

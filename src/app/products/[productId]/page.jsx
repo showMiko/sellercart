@@ -14,7 +14,7 @@ const ProductsPage = ({ params }) => {
   const [cartLoading, setCartLoading] = useState(false); // Loading for add to cart
   const router = useRouter();
   const productId = params.productId;
-  const { uid,currProduct,setCurrProduct } = useContextApi();
+  const { uid,setCurrProduct,setBuyNowItems } = useContextApi();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -60,6 +60,13 @@ const ProductsPage = ({ params }) => {
     setSelectedImage(image);
   };
 
+  const handleBuyNow=()=>{
+    setLoading(true);
+    setBuyNowItems([product]);
+    setLoading(false);
+    router.push("/buynow");
+  }
+
   return (
     <div style={{ paddingTop: "3rem" }}>
       <div className="container mx-auto px-4 py-8">
@@ -100,7 +107,7 @@ const ProductsPage = ({ params }) => {
               <Button size="large" icon={<ShoppingCartOutlined />} loading={cartLoading} onClick={handleAddToCart}>
                 Add to Cart
               </Button>
-              <Button size="large">Buy Now</Button>
+              <Button size="large" onClick={handleBuyNow}>Buy Now</Button>
             </div>
           </div>
         </div>

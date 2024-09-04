@@ -120,7 +120,7 @@ const GetStarted = () => {
                         </div>
                     </form>
                     <div className="mt-10 text-center text-sm text-gray-500 w-full flex flex-col items-center">
-                        Already a member?
+                        Dont have an account?
                         <button
                                 onClick={handleFlip}
                                 className="mt-2 flex w-20 justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
@@ -362,8 +362,10 @@ const GetStarted = () => {
     const handleFlip = () => {
         setIsLogin(!isLogin);
     };
+    const getEmail=localStorage.getItem('email')
+    const getUid=localStorage.getItem('uid')
     useEffect(() => {
-        if (userEmail && uid) {
+        if (getEmail && getUid) {
             router.push('/');
         }
     }, [userEmail,uid,router]);
